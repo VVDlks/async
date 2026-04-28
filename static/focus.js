@@ -12,7 +12,12 @@ let sendRequestPromise = (url) =>
             if(response.ok){
                 return response.json();
             }
-            throw new Error(response.statusText);
+            const myObject = {
+                's1002': "значение"
+            };
+
+            return myObject;
+
         });
 }
 
@@ -25,7 +30,7 @@ async function run() {
         const orgsMap = reqsToMap(requisites);
 
         const analytics = await sendRequestPromise(`${API.analytics}?ogrn=${ogrns}`);
-        addInOrgsMap(orgsMap, analytics, "analytics");
+        addInOrgsMap(orgsMap, analytics, "analitics");
 
         const buh = await sendRequestPromise(`${API.buhForms}?ogrn=${ogrns}`);
         addInOrgsMap(orgsMap, buh, "buhForms");
@@ -33,7 +38,8 @@ async function run() {
         render(orgsMap, orgOgrns);
 
     } catch (error) {
-        console.error("Error", error);
+        alert(`${error}`);
+        console.warn("Error", error);
     }
 }
 
