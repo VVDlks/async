@@ -7,25 +7,13 @@ const API = {
 
 let sendRequestPromise = (url) =>
 {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    try{
-                        resolve(JSON.parse(xhr.response));
-                    }
-                    catch (e) {
-                        reject(e);
-                    }
-                }
+    return fetch(url)
+        .then(response => {
+            if(response.ok){
+                return response.json();
             }
-        };
-
-        xhr.send();
-    })
+            throw new Error(response.statusText);
+        });
 }
 
 async function run() {
